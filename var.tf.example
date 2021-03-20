@@ -1,0 +1,15 @@
+variable "password"{
+    
+}
+variable "port"{
+    
+}
+variable "sec"{
+    
+}
+variable "http"{
+    
+}
+variable "obfs"{
+    
+}
