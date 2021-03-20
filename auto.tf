@@ -2,7 +2,7 @@
 provider "aws" {    
     access_key = "${var.access_key}"
     secret_key = "${var.secret_key}"
-    region     = "us-west-2"
+    region     = "${var.region}"
 }
 resource "aws_security_group" "demo-sg" {
         name                = "demo-sg"
@@ -36,7 +36,7 @@ resource "aws_security_group" "demo-sg" {
 resource "aws_instance" "ubuntuinstance" {
   ami           = "ami-0ca5c3bd5a268e7db"
   instance_type = "t2.micro" 
-  key_name = "csye7220" 
+  key_name = var.keyname
   tags = {
         Name = "csye7220"
         OS = "ubuntu"

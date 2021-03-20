@@ -5,3 +5,5 @@ variable "http"{}
 variable "obfs"{}
 variable "access_key" {}
 variable "secret_key" {}
+variable "keyname"{}
+variable "region"{}
