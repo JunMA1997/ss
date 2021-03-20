@@ -1,5 +1,4 @@
-variable "access_key" {}
-variable "secret_key" {}
+
 provider "aws" {    
     access_key = "${var.access_key}"
     secret_key = "${var.secret_key}"
@@ -22,10 +21,17 @@ resource "aws_security_group" "demo-sg" {
                 cidr_blocks     = ["0.0.0.0/0"]
                 description     = "Plain HTTP"
         }
+        egress {
+            from_port = 0
+            to_port = 0
+            protocol = "-1"
+            cidr_blocks = ["0.0.0.0/0"]
+        }
         tags = {
                 Name = "ssr ssh"
         }
-        user_data = "wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh\nchmod +x shadowsocksR.sh << EOF \n${var.password}\n${var.port}\n{var.sec}\n${var.http}\n${var.obfs}\n"
+        
+        
 }
 resource "aws_instance" "ubuntuinstance" {
   ami           = "ami-0ca5c3bd5a268e7db"
@@ -36,6 +42,7 @@ resource "aws_instance" "ubuntuinstance" {
         OS = "ubuntu"
   }
   vpc_security_group_ids = [aws_security_group.demo-sg.id]
+  user_data = "#!/bin/bash\nsudo echo \"begin\">>/home/ubuntu/begin.txt \ncd /home/ubuntu\nsudo wget --no-check-certificate https://raw.githubusercontent.com/JunMA1997/ss/master/shadowsocksR.sh\nchmod +x shadowsocksR.sh\nsudo ./shadowsocksR.sh<< EOF \n${var.password}\n${var.port}\n${var.sec}\n${var.http}\n${var.obfs}\nEOF\nsudo echo \"end\">>/home/ubuntu/end.txt"
 }
 output "public_ip_ubuntu" {
   value = [

@@ -1,15 +1,7 @@
-variable "password"{
-    
-}
-variable "port"{
-    
-}
-variable "sec"{
-    
-}
-variable "http"{
-    
-}
-variable "obfs"{
-    
-}
+variable "password"{}
+variable "port"{}
+variable "sec"{}
+variable "http"{}
+variable "obfs"{}
+variable "access_key" {}
+variable "secret_key" {}
